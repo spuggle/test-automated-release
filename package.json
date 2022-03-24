@@ -67,7 +67,7 @@
         "@semantic-release/github",
         {
           "assets": [{
-            "path": [ "dist/", "package.json", "package-lock.json", "pnpm-lock.yaml", ".gitignore" ],
+            "path": "test-automated-release.tar.gz",
             "name": "test-automated-release-${branch}-${nextRelease.gitTag}"
           }],
           "labels": false,
