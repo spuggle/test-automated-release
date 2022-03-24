@@ -18,8 +18,7 @@ jobs:
     steps:
       - name: Set artifact file name
         run: |
-          echo "GITHUB_REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')" >> $GITHUB_ENV
-          echo "ARTIFACT_FILENAME=${{ env.GITHUB_REPOSITORY_NAME }}.tar.gz" >> $GITHUB_ENV
+          echo "GITHUB_REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')" >> $GITHUB_ENV; echo "ARTIFACT_FILENAME=${{ env.GITHUB_REPOSITORY_NAME }}.tar.gz" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v3
