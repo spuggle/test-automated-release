@@ -69,7 +69,9 @@
           "assets": [{
             "path": [ "dist/", "package.json", "package-lock.json", "pnpm-lock.yaml", ".gitignore" ],
             "name": "test-automated-release-${branch}-${nextRelease.gitTag}"
-          }]
+          }],
+          "labels": false,
+          "releasedLabels": false
         }
       ]
     ]
