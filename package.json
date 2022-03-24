@@ -1,21 +1,21 @@
 {
-  "name": "typescript-template",
+  "name": "test-automated-release",
   "version": "0.1.0",
   "description": "My TypeScript starter template",
   "private": true,
   "author": "spuggle",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/spuggle/typescript-template#readme",
+  "homepage": "https://github.com/spuggle/test-automated-release#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spuggle/typescript-template.git"
+    "url": "git+https://github.com/spuggle/test-automated-release.git"
   },
   "keywords": [
     "typescript",
     "template"
   ],
   "bugs": {
-    "url": "https://github.com/spuggle/typescript-template/issues"
+    "url": "https://github.com/spuggle/test-automated-release/issues"
   },
   "main": "dist/index.js",
   "scripts": {
@@ -68,7 +68,7 @@
         {
           "assets": [{
             "path": [ "dist/", "package.json", "package-lock.json", "pnpm-lock.yaml", ".gitignore" ],
-            "name": "typescript-template-${branch}-${nextRelease.gitTag}"
+            "name": "test-automated-release-${branch}-${nextRelease.gitTag}"
           }]
         }
       ]
