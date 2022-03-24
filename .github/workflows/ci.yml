@@ -1,0 +1,75 @@
+name: CI
+on:
+  push:
+    # Avoid multiple runs because release.yml workflow calls this workflow on push to main
+    branches_ignore:
+      - main
+  workflow_call:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare pnpm
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Compile project
+        run: pnpm run build
+
+      - name: Upload compiled files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            .gitignore
+            package.json
+            package-lock.json
+            pnpm-lock.yaml
+            dist/
+            !dist/**/*.map.*
+          retention-days: 7
+
+  lint:
+    name: Lint project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare pnpm
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run linter
+        run: pnpm run lint
+
