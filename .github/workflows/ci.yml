@@ -50,9 +50,10 @@ jobs:
           path: ${{ env.ARTIFACT_FILENAME }}
           retention-days: 7
 
-  tets:
+  test:
     name: Test project
     runs-on: ubuntu-latest
+    needs: [ build ]
 
     steps:
       - name: Get artifact file name
