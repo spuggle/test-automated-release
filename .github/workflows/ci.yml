@@ -1,9 +1,11 @@
 name: CI
 on:
   push:
-    # Avoid multiple runs because release.yml workflow calls this workflow on push to main
+    # Avoid multiple runs because release.yml workflow calls this workflow on push to the listed branches
     branches_ignore:
       - main
+      - next
+      - release-**
   workflow_call:
 
 defaults:
