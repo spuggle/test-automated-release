@@ -1,6 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo $1
 pnpx --no-install commitlint --edit $1
-pnpm run build
 pnpm run lint
+pnpm run build
+pnpm run test
