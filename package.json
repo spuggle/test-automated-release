@@ -25,20 +25,20 @@
     "lint": "pnpx eslint src/",
     "lint:commit": "git log -1 --pretty=format:'%B' | commitlint",
     "lint:fix": "pnpx eslint --fix src/",
-    "test": "echo 'Error: no test specified' && exit 1"
+    "test": "echo 'No test specified'"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
-    "@types/node": "^17.0.22",
-    "@typescript-eslint/eslint-plugin": "^5.16.0",
-    "@typescript-eslint/parser": "^5.16.0",
-    "eslint": "^8.11.0",
+    "@types/node": "^17.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.12.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-unicorn": "^41.0.1",
     "husky": "^7.0.4",
     "semantic-release": "^19.0.2",
     "ts-patch": "^2.0.1",
-    "typescript": "^4.6.2",
+    "typescript": "^4.6.3",
     "typescript-transform-paths": "^3.3.1"
   },
   "type": "module",
@@ -58,17 +58,32 @@
     }
   },
   "release": {
-    "branches": [ "main", "next" ],
+    "branches": [
+      {
+        "name": "main"
+      },
+      {
+        "name": "next",
+        "channel": "next"
+      },
+      {
+        "name": "release-*",
+        "channel": "beta",
+        "prerelease": true
+      }
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       [
         "@semantic-release/github",
         {
-          "assets": [{
-            "path": "test-automated-release.tar.gz",
-            "name": "test-automated-release-${branch}-${nextRelease.gitTag}"
-          }],
+          "assets": [
+            {
+              "path": "test-automated-release.tar.gz",
+              "name": "test-automated-release-${branch}-${nextRelease.gitTag}"
+            }
+          ],
           "labels": false,
           "releasedLabels": false
         }

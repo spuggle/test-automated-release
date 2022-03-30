@@ -1,9 +1,11 @@
 name: CI
 on:
   push:
-    # Avoid multiple runs because release.yml workflow calls this workflow on push to main
+    # Avoid multiple runs because release.yml workflow calls this workflow on push to the listed branches
     branches_ignore:
       - main
+      - next
+      - release-**
   workflow_call:
 
 defaults:
@@ -49,6 +51,44 @@ jobs:
           name: ${{ env.ARTIFACT_FILENAME }}
           path: ${{ env.ARTIFACT_FILENAME }}
           retention-days: 7
+
+  test:
+    name: Test project
+    runs-on: ubuntu-latest
+    needs: [ build ]
+
+    steps:
+      - name: Get artifact file name
+        run: |
+          echo "ARTIFACT_FILENAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}').tar.gz" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare pnpm
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download compiled files
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_FILENAME }}
+
+      - name: Decompress compiled files
+        run: mkdir ./dist && tar -zxvf ./${{ env.ARTIFACT_FILENAME }} -C ./dist/
+
+      - name: Run tests
+        run: pnpm run test
 
   lint:
     name: Lint project
